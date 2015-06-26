@@ -77,9 +77,14 @@ if platform_family?("fedora") and node['platform_version'].to_i >= 16
     not_if { ::FileTest.exist?(File.join(dir, "PG_VERSION")) }
   end
 
-elsif platform?("redhat") and node['platform_version'].to_i >= 7
+elsif platform_family?("rhel") and node['platform_version'].to_i >= 7
+  if platform?("redhat")
+    setup_binary = "postgresql#{node['postgresql']['version'].split('.').join}-setup"
+  else
+    setup_binary = 'postgresql-setup'
+  end
 
-  execute "postgresql#{node['postgresql']['version'].split('.').join}-setup initdb #{svc_name}" do
+  execute "#{setup_binary} initdb #{svc_name}" do
     not_if { ::FileTest.exist?(File.join(dir, "PG_VERSION")) }
   end
 
