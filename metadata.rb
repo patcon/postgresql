@@ -24,5 +24,5 @@ end
 end
 
 depends "apt", ">= 1.9.0"
-depends "pg_chef_gem"
+depends "pg-chef-gem"
 depends "openssl", "~> 4.0.0"
